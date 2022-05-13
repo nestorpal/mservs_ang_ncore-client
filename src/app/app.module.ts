@@ -15,6 +15,17 @@ import { MaterialModule } from './material.module';
 import { RegistrarComponent } from './seguridad/registrar/registrar.component';
 import { LoginComponent } from './seguridad/login/login.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { BarraComponent } from './navegacion/barra/barra.component';
+import { MenuListaComponent } from './navegacion/menu-lista/menu-lista.component';
+import { SeguridadService } from './seguridad/seguridad.service';
+import { BooksComponent } from './books/books.component';
+import { BooksService } from './books/books.service';
+import { BookNuevoComponent } from './books/book-nuevo.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { AutoresComponent } from './autores/autores.component';
+import { AutoresService } from './autores/autores.service';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { SeguridadInterceptor } from './seguridad/seguridad-interceptor';
 
 @NgModule({
   declarations: [
@@ -24,7 +35,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     LibroComponent,
     InicioComponent,
     RegistrarComponent,
-    LoginComponent
+    LoginComponent,
+    BarraComponent,
+    MenuListaComponent,
+    BooksComponent,
+    BookNuevoComponent,
+    AutoresComponent
   ],
   imports: [
     BrowserModule,
@@ -32,11 +48,18 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FormsModule,
     BrowserAnimationsModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    HttpClientModule
   ],
   providers: [
-    LibrosService
+    LibrosService,
+    // SeguridadService,
+    // BooksService, // set as Injectable. Check books.service for more detail
+    // AutoresService, // set as Injectable. Check autores.service for more detail
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    { provide: HTTP_INTERCEPTORS, useClass: SeguridadInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [BookNuevoComponent]
 })
 export class AppModule { }

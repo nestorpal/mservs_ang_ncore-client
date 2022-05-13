@@ -1,0 +1,44 @@
+<div fxLayoutAlign="center center">
+  <mat-form-field fxFlex="60%">
+    <input matInput type="text" (keyup)="filtrarTabla($event)" placeholder="Ingrese filtro de búsqueda" />
+  </mat-form-field>
+</div>
+
+<mat-table [dataSource]="dataSource" matSort (matSortChange)="ordenarColumna($event)">
+  <ng-container matColumnDef="titulo">
+    <!-- represents column -->
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Título</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.titulo }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="descripcion">
+    <!-- represents column -->
+    <mat-header-cell *matHeaderCellDef mat-sort-header
+      >Descripción</mat-header-cell
+    >
+    <mat-cell *matCellDef="let element">{{ element.descripcion }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="autor">
+    <!-- represents column -->
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Autor</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.autor.nombreCompleto }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="precio">
+    <!-- represents column -->
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Precio</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.precio }}</mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="desplegarColumnas"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: desplegarColumnas"></mat-row>
+</mat-table>
+
+
+<mat-paginator (page)="eventoPaginador($event)" #paginacion [pageSize]="librosPorPagina" [pageSizeOptions]="paginaCombo" [length]="totalLibros">
+</mat-paginator>
+
+<button mat-fab id="boton-agregar" color="warm" (click)="mostrarDialogo()">
+  <mat-icon>add</mat-icon>
+</button>
